@@ -1,0 +1,8 @@
+#ignore folders
+
+.vs
+bin
+obj
+nugetPublish
+node_modules
+bin
