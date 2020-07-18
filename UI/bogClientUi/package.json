@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-client":"ng run bogClientUi:buildWebPack"
+    "build-dev": "ng run bogClientUi:buildWebPack"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +43,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "mini-css-extract-plugin": "^0.9.0",
     "protractor": "~7.0.0",
     "raw-loader": "^1.0.0",
     "sass-loader": "^9.0.2",
