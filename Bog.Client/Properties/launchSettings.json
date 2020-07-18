@@ -18,7 +18,7 @@
     "Bog.Client": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:6001;http://localhost:6000",
+      "applicationUrl": "https://localhost:50785;http://localhost:50784",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

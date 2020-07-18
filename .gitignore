@@ -6,3 +6,6 @@ obj
 nugetPublish
 node_modules
 bin
+
+# ignore client builds
+*/wwwroot/client/
