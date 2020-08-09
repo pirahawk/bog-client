@@ -9,4 +9,9 @@
     <Folder Include="wwwroot\client\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Bog.Api.Common" Version="1.0.53" />
+    <PackageReference Include="Bog.Api.Domain" Version="1.0.53" />
+  </ItemGroup>
+
 </Project>

@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Bog.Client.Domain.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Bog.Client
 {
@@ -23,6 +18,10 @@ namespace Bog.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.WithBogConfiguration(Configuration);
+            services.WithBogApiClient();
+            services.WithBogApiServices();
+
             services.AddControllers();
             services.AddRazorPages();
         }
@@ -43,9 +42,7 @@ namespace Bog.Client
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
