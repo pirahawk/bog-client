@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Bog.Client.Domain.Api;
+using Bog.Client.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bog.Client.Controllers
@@ -19,7 +20,11 @@ namespace Bog.Client.Controllers
         public async Task<IActionResult> GetPaginatedContent([FromRoute]int page)
         {
             var allContent =  await _paginatedContentCoordinator.GetContent(page);
-            return View("PaginatedContent", allContent);
+            return View("PaginatedContent", new PaginatedContentResult
+            {
+                Page = page,
+                Content = allContent
+            });
         }
 
         [HttpGet]

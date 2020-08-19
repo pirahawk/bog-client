@@ -1,15 +1,16 @@
 ﻿@using Bog.Api.Domain.Values
-@model IEnumerable<Bog.Api.Domain.Models.Http.ContentResponse>
+@model Bog.Client.Domain.Models.PaginatedContentResult
 
 @{
     ViewData["Title"] = "Home page";
+    var allContent = Model.Content.ToArray();
 }
 
 
-@foreach (var content in Model)
+@foreach (var content in allContent)
 {
     //var link = content.Links?.FirstOrDefault(link => link.Relation == LinkRelValueObject.SELF);
-    var link = this.Url.Action("GetArticle", new {contentId = content.Id});
+    var link = Url.Action("GetArticle", new { contentId = content.Id });
 
     <div>
         <a href="@(link)"><span>@(content.Title)</span></a>
@@ -17,4 +18,16 @@
         <span>@($"by {content.Author}")</span>
         <span>@(content.Updated.HasValue? $"Updated - {content.Updated.Value:d}": $"Created - {content.Created:d}")</span>
     </div>
+}
+
+@if (Model.Page > 0)
+{
+    var backLink = Url.Action("GetPaginatedContent", new { page = Model.Page - 1 });
+    <a href="@(backLink)">previous</a>
+}
+
+@if (allContent.Any())
+{
+    var forwardLink = Url.Action("GetPaginatedContent", new { page = Model.Page + 1 });
+    <a href="@(forwardLink)">next</a>
 }
