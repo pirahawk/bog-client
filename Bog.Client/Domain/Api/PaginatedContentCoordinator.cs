@@ -27,7 +27,7 @@ namespace Bog.Client.Domain.Api
             int take = _contentConfiguration.Take;
             int skip = page * take;
 
-            var result = await _apiClient.GetArticles(take, skip);
+            var result = await _apiClient.GetArticles(take, skip, _contentConfiguration.Filter, _contentConfiguration.Include);
             return result;
         }
     }

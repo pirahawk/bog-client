@@ -7,7 +7,11 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-@RenderBody()
+<app-root></app-root>
+
+<section id="serverContent">
+    @RenderBody()
+</section>
 
 <script src="~/client/polyfills.js" asp-append-version="true"></script>
 <script src="~/client/app.js" asp-append-version="true"></script>

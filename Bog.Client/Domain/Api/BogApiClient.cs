@@ -13,6 +13,7 @@ namespace Bog.Client.Domain.Api
     public interface IBogApiClient
     {
         Task<IEnumerable<ContentResponse>> GetArticles(int take, int skip);
+        Task<IEnumerable<ContentResponse>> GetArticles(int take, int skip, string filter, string include);
     }
 
     public class BogApiClient : HttpClient, IBogApiClient
@@ -28,12 +29,18 @@ namespace Bog.Client.Domain.Api
 
         public async Task<IEnumerable<ContentResponse>> GetArticles(int take, int skip)
         {
+            return await GetArticles(take, skip, null, null);
+        }
+
+        public async Task<IEnumerable<ContentResponse>> GetArticles(int take, int skip, string filter, string include)
+        {
             var requestPath = $"api/content/{_contentConfiguration.BogId}";
-            //var builder = new UriBuilder($"api/content/{_contentConfiguration.BogId}");
-            var pathAndQuery = QueryHelpers.AddQueryString(requestPath, new Dictionary<string,string>()
+            var pathAndQuery = QueryHelpers.AddQueryString(requestPath, new Dictionary<string, string>()
             {
                 {"take", $"{take}"},
-                {"skip", $"{skip}"}
+                {"skip", $"{skip}"},
+                {"filter", $"{filter}"},
+                {"include", $"{include}"},
             });
             var request = new HttpRequestMessage(HttpMethod.Get, pathAndQuery);
             var response = await this.SendAsync(request);

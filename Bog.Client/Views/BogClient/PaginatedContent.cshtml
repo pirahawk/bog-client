@@ -1,0 +1,20 @@
+﻿@using Bog.Api.Domain.Values
+@model IEnumerable<Bog.Api.Domain.Models.Http.ContentResponse>
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+@foreach (var content in Model)
+{
+    //var link = content.Links?.FirstOrDefault(link => link.Relation == LinkRelValueObject.SELF);
+    var link = this.Url.Action("GetArticle", new {contentId = content.Id});
+
+    <div>
+        <a href="@(link)"><span>@(content.Title)</span></a>
+        <span>@(content.Description)</span>
+        <span>@($"by {content.Author}")</span>
+        <span>@(content.Updated.HasValue? $"Updated - {content.Updated.Value:d}": $"Created - {content.Created:d}")</span>
+    </div>
+}
