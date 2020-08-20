@@ -10,7 +10,10 @@
 @foreach (var content in allContent)
 {
     //var link = content.Links?.FirstOrDefault(link => link.Relation == LinkRelValueObject.SELF);
-    var link = Url.Action("GetArticle", new { contentId = content.Id });
+    var link = Url.Action("GetArticle", new { 
+        contentId = content.Id, 
+        title= content.Title?.Trim().Replace(' ', '-')
+    });
 
     <div>
         <a href="@(link)"><span>@(content.Title)</span></a>

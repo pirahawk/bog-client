@@ -14,6 +14,7 @@ namespace Bog.Client.Domain.Api
     {
         Task<IEnumerable<ContentResponse>> GetArticles(int take, int skip);
         Task<IEnumerable<ContentResponse>> GetArticles(int take, int skip, string filter, string include);
+        Task<ContentResponse> GetArticle(Guid contentId);
     }
 
     public class BogApiClient : HttpClient, IBogApiClient
@@ -43,16 +44,33 @@ namespace Bog.Client.Domain.Api
                 {"include", $"{include}"},
             });
             var request = new HttpRequestMessage(HttpMethod.Get, pathAndQuery);
-            var response = await this.SendAsync(request);
+            var response = await SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception($"Error retrieving articles for route {pathAndQuery}");
+                throw new Exception($"Error retrieving articles for route {pathAndQuery} : {response.StatusCode}");
             }
 
             var msgContent = await response.Content.ReadAsStringAsync();
             var searchArticles = JsonSerializer.Deserialize<IEnumerable<ContentResponse>>(msgContent, _jsonOptions);
             return searchArticles;
+        }
+
+        public async Task<ContentResponse> GetArticle(Guid contentId)
+        {
+            var requestPath = $"api/content/article/{contentId}";
+
+            var request = new HttpRequestMessage(HttpMethod.Get, requestPath);
+            var response = await SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error retrieving article {requestPath} : {response.StatusCode}");
+            }
+
+            var msgContent = await response.Content.ReadAsStringAsync();
+            var articleContentResponse = JsonSerializer.Deserialize<ContentResponse>(msgContent, _jsonOptions);
+            return articleContentResponse;
         }
     }
 }

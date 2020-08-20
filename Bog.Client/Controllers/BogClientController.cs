@@ -9,9 +9,12 @@ namespace Bog.Client.Controllers
     public class BogClientController : Controller
     {
         private readonly IPaginatedContentCoordinator _paginatedContentCoordinator;
-        public BogClientController(IPaginatedContentCoordinator paginatedContentCoordinator)
+        private readonly IArticleContentCoordinator _articleContentCoordinator;
+
+        public BogClientController(IPaginatedContentCoordinator paginatedContentCoordinator, IArticleContentCoordinator articleContentCoordinator)
         {
             _paginatedContentCoordinator = paginatedContentCoordinator;
+            _articleContentCoordinator = articleContentCoordinator;
         }
 
         [HttpGet]
@@ -28,10 +31,12 @@ namespace Bog.Client.Controllers
         }
 
         [HttpGet]
-        [Route("article/{contentId:guid}")]
+        [Route("article/{contentId:guid}/")]
+        [Route("article/{contentId:guid}/{title}")]
         public async Task<IActionResult> GetArticle([FromRoute]Guid contentId)
         {
-            return View("Client");
+            var articleContent = await _articleContentCoordinator.GetArticle(contentId);
+            return View("ArticleContent", articleContent);
         }
     }
 }

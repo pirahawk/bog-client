@@ -1,0 +1,15 @@
+﻿@using Bog.Api.Domain.Values
+@using Bog.Api.Common
+@model Bog.Client.Domain.Models.ArticleContentResult
+
+@{
+    ViewData["Title"] = "Home page";
+    var decodedContent = StringUtilities.FromBase64(Model.EncodedContent);
+}
+
+
+<article>
+    <h1>@(Model.Article.Title)</h1>
+    <cite>@($"by - {Model.Article.Author} {Model.Article.Created:d}")</cite>
+    @Html.Raw(decodedContent)
+</article>

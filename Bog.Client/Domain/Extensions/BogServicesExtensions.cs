@@ -8,6 +8,8 @@ namespace Bog.Client.Domain.Extensions
         public static void WithBogApiServices(this IServiceCollection services)
         {
             services.AddTransient<IPaginatedContentCoordinator,PaginatedContentCoordinator>();
+            services.AddTransient<IArticleContentCoordinator, ArticleContentCoordinator>();
+
         }
     }
 }
