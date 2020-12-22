@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BogComponentsModule } from './bog-components/bog-components.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AppComponent } from './app.component';
     CommonModule,
     HttpClientModule,
     AppRoutingModule,
+    BogComponentsModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }
