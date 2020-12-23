@@ -9,7 +9,7 @@ const routes: Routes = [
   {path:'article/:contentId', component: ArticleDisplayComponent},
   {path:'article/:contentId/:title', component: ArticleDisplayComponent},
   {path:':page', component: ArticleListComponent},
-  {path:'', component: ArticleListComponent},
+  {path:'', redirectTo:'/0', pathMatch:'full'},
   {path:'**', component: ErrorDisplayComponent}
 ];
 

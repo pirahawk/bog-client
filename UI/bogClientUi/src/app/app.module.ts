@@ -6,20 +6,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BogComponentsModule } from './bog-components/bog-components.module';
+import { ApiServicesModule } from './api-services/api-services.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+
   imports: [
     BrowserModule,
     CommonModule,
     HttpClientModule,
+    ApiServicesModule,
     AppRoutingModule,
     BogComponentsModule
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue : '/' }
+  ],
+  declarations: [
+    AppComponent
   ],
   bootstrap: [AppComponent]
 })
