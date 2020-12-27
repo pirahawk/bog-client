@@ -19,6 +19,9 @@ export class ArticleListComponent implements OnInit {
       this.getArticleListService.getArticles(currentPage).subscribe(
         httpResult =>{
           console.log(httpResult);
+        },
+        httpFailedResult=>{
+          console.log(httpFailedResult);
         }
       );
     });

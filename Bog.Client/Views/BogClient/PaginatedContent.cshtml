@@ -1,18 +1,27 @@
-﻿@using Bog.Api.Domain.Values
+﻿@using Bog.Client.Domain.Configuration
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Http.Extensions
 @model Bog.Client.Domain.Models.PaginatedContentResult
 
+@inject IOptions<SiteConfiguration> SiteConfigurationOptions
+
 @{
-    ViewData["Title"] = "Home page";
+    var siteConfiguration = SiteConfigurationOptions.Value;
+    ViewData["Title"] = siteConfiguration.Title;
+    ViewData["Description"] = siteConfiguration.Description;
+    ViewData["Author"] = siteConfiguration.Author;
+    ViewData["Canonical"] = ViewContext.HttpContext.Request.GetDisplayUrl();
+
     var allContent = Model.Content.ToArray();
 }
 
 
 @foreach (var content in allContent)
 {
-    //var link = content.Links?.FirstOrDefault(link => link.Relation == LinkRelValueObject.SELF);
-    var link = Url.Action("GetArticle", new { 
-        contentId = content.Id, 
-        title= content.Title?.Trim().Replace(' ', '-')
+    var link = Url.Action("GetArticle", new
+    {
+        contentId = content.Id,
+        title = content.Title?.Trim().Replace(' ', '-')
     });
 
     <div>

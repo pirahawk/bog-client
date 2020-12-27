@@ -3,10 +3,16 @@
 @model Bog.Client.Domain.Models.ArticleContentResult
 
 @{
-    ViewData["Title"] = "Home page";
     var decodedContent = StringUtilities.FromBase64(Model.EncodedContent);
+    ViewData["Title"] = Model.Article.Title;
+    ViewData["Description"] = Model.Article.Description;
+    ViewData["Author"] = Model.Article.Author;
+    ViewData["Canonical"] = Url.Link(null, new
+    {
+        action = "GetArticle",
+        contentId = Model.Article.Id,
+    });
 }
-
 
 <article>
     <h1>@(Model.Article.Title)</h1>
