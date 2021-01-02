@@ -4,9 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <meta name="title" content="@ViewData["Title"]" />
     <meta name="Description" content="@ViewData["Description"]" />
     <meta name="Author" content="@ViewData["Author"]" />
-    <link rel="canonical" href="@ViewData["Canonical"]"/>
+    @if (ViewData.ContainsKey("Published"))
+    {
+        <meta name="article:published_time" content="@ViewData["Published"]" />
+    }
+    <link rel="canonical" href="@ViewData["Canonical"]" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>

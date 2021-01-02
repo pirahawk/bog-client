@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ContentResponse } from './models/contentResponse';
 
 @Injectable()
-export class GetArticleListServiceService {
+export class GetArticleListService {
   constructor(private httpClient:HttpClient) {
    }
 

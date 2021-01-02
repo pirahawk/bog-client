@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ArticleContentResult } from './models/articleContentResult';
 
 @Injectable()
-export class GetArticleContentServiceService {
+export class GetArticleContentService {
   constructor(private httpClient:HttpClient) {
   }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetArticleContentServiceService } from '../api-services/get-article-content-service.service';
+import { GetArticleContentService } from '../api-services/get-article-content-service.service';
+import { HeaderManagerService } from '../api-services/header-manager-service.service';
+import { ArticleContentResult } from '../api-services/models/articleContentResult';
 
 @Component({
   selector: 'app-article-display',
@@ -10,19 +12,26 @@ export class ArticleDisplayComponent implements OnInit {
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
-              private getArticleContentService:GetArticleContentServiceService) { }
+              private getArticleContentService: GetArticleContentService,
+              private headerManagerService: HeaderManagerService) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      let contentId = paramMap.get('contentId');
-      let title = paramMap.has('title') ? paramMap.get('title') : '';
+      const contentId = paramMap.get('contentId');
+      const title = paramMap.has('title') ? paramMap.get('title') : '';
 
       this.getArticleContentService.getArticles(contentId, title).subscribe(
-        httpResult =>{
+        httpResult => {
+          const articleResult: ArticleContentResult = httpResult.body;
+          this.updateHeaderTags(articleResult);
           console.log(httpResult);
         }
       );
     });
   }
 
+  private updateHeaderTags(articleResult: ArticleContentResult): void {
+    const article = articleResult.article;
+    this.headerManagerService.tryUpdateDocumentHeader(article.title, article.description, article.author);
+  }
 }

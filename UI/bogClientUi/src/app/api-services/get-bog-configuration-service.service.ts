@@ -3,7 +3,7 @@ import { SiteConfiguration } from './models/serviceConfiguration';
 import { ajax } from 'rxjs/ajax';
 
 @Injectable()
-export class GetBogConfigurationServiceService {
+export class GetBogConfigurationService {
   private siteConfiguration:SiteConfiguration;
   public get SiteConfiguration():SiteConfiguration{
     return this.siteConfiguration;

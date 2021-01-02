@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { GetArticleListServiceService } from '../api-services/get-article-list-service.service';
+import { GetArticleListService } from '../api-services/get-article-list-service.service';
+import { GetBogConfigurationService } from '../api-services/get-bog-configuration-service.service';
+import { HeaderManagerService } from '../api-services/header-manager-service.service';
 
 @Component({
   selector: 'app-article-list',
@@ -9,21 +11,29 @@ import { GetArticleListServiceService } from '../api-services/get-article-list-s
 export class ArticleListComponent implements OnInit {
 
   constructor(private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private getArticleListService:GetArticleListServiceService) { }
+              private activatedRoute: ActivatedRoute,
+              private getArticleListService: GetArticleListService,
+              private bogConfigurationService: GetBogConfigurationService,
+              private headerManagerService: HeaderManagerService) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      let pageNumberParam = Number(paramMap.get("page"));
-      let currentPage = pageNumberParam || 0;
+      const pageNumberParam = Number(paramMap.get('page'));
+      const currentPage = pageNumberParam || 0;
       this.getArticleListService.getArticles(currentPage).subscribe(
-        httpResult =>{
+        httpResult => {
+          this.updateHeaderTags();
           console.log(httpResult);
         },
-        httpFailedResult=>{
+        httpFailedResult => {
           console.log(httpFailedResult);
         }
       );
     });
+  }
+
+  private updateHeaderTags(): void {
+    const siteConfiguration = this.bogConfigurationService.SiteConfiguration;
+    this.headerManagerService.tryUpdateDocumentHeader(siteConfiguration.title, siteConfiguration.description, siteConfiguration.author);
   }
 }
