@@ -8,7 +8,7 @@ export class GetArticleContentService {
   constructor(private httpClient:HttpClient) {
   }
 
-  public getArticles(contentId:string, title:string|null):Observable<HttpResponse<ArticleContentResult>>{
+  public getArticle(contentId:string, title:string|null):Observable<HttpResponse<ArticleContentResult>>{
     let apiUrl = `/api/article/${contentId}${!title ? '' : `/${title}`}`;
     return this.httpClient.get<ArticleContentResult>(apiUrl, {observe: 'response'});
   }

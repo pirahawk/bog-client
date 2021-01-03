@@ -19,20 +19,32 @@ export class ArticleDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     //TODO: do something with this
-    this.routingHelper.doTest();
+    //this.routingHelper.doTest();
 
-    this.activatedRoute.paramMap.subscribe(paramMap => {
-      const contentId = paramMap.get('contentId');
-      const title = paramMap.has('title') ? paramMap.get('title') : '';
-
-      this.getArticleContentService.getArticles(contentId, title).subscribe(
-        httpResult => {
-          const articleResult: ArticleContentResult = httpResult.body;
-          this.updateHeaderTags(articleResult);
-          console.log(httpResult);
+    this.activatedRoute.data.subscribe(
+      data =>{
+        if(data.articleContent){
+          this.updateHeaderTags(data.articleContent);
         }
-      );
-    });
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+
+    // this.activatedRoute.paramMap.subscribe(paramMap => {
+    //   const contentId = paramMap.get('contentId');
+    //   const title = paramMap.has('title') ? paramMap.get('title') : '';
+
+    //   this.getArticleContentService.getArticles(contentId, title).subscribe(
+    //     httpResult => {
+    //       const articleResult: ArticleContentResult = httpResult.body;
+    //       this.updateHeaderTags(articleResult);
+    //       console.log(httpResult);
+    //     }
+    //   );
+    // });
   }
 
   private updateHeaderTags(articleResult: ArticleContentResult): void {

@@ -4,10 +4,23 @@ import { ArticleDisplayComponent } from './bog-components/article-display.compon
 import { ArticleListComponent } from './bog-components/article-list.component';
 import { ErrorDisplayComponent } from './bog-components/error-display.component';
 import { GetArticleListResolver } from './route-resolvers/get-article-list-resolver';
+import { GetArticleResolver } from './route-resolvers/get-article-resolver';
 
 const routes: Routes = [
-  {path: 'article/:contentId', component: ArticleDisplayComponent},
-  {path: 'article/:contentId/:title', component: ArticleDisplayComponent},
+  {
+    path: 'article/:contentId',
+    component: ArticleDisplayComponent,
+    resolve: {
+      articleContent: GetArticleResolver
+    }
+  },
+  {
+    path: 'article/:contentId/:title',
+    component: ArticleDisplayComponent,
+    resolve: {
+      articleContent: GetArticleResolver
+    }
+  },
   {
     path: ':page',
     component: ArticleListComponent,
@@ -15,8 +28,8 @@ const routes: Routes = [
       articlesList: GetArticleListResolver
     }
   },
-  {path: '', redirectTo: '/0', pathMatch: 'full'},
-  {path: '**', component: ErrorDisplayComponent}
+  { path: '', redirectTo: '/0', pathMatch: 'full' },
+  { path: '**', component: ErrorDisplayComponent }
 ];
 
 @NgModule({
