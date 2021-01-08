@@ -5,6 +5,7 @@ import { GetArticleContentService } from './get-article-content-service.service'
 import { GetBogConfigurationService } from './get-bog-configuration-service.service';
 import { HeaderManagerService } from './header-manager-service.service';
 import { RoutingHelperService } from './routing-helper.service';
+import { RemoveServerContentService } from './remove-server-content.service';
 
 const configurationServiceFactory = () => new GetBogConfigurationService();
 
@@ -14,12 +15,13 @@ const configurationServiceFactory = () => new GetBogConfigurationService();
   imports: [
     CommonModule
   ],
-  providers:[
-    {provide:GetBogConfigurationService, useValue: configurationServiceFactory()},
+  providers: [
+    {provide: GetBogConfigurationService, useValue: configurationServiceFactory()},
     GetArticleListService,
     GetArticleContentService,
     HeaderManagerService,
-    RoutingHelperService
+    RoutingHelperService,
+    RemoveServerContentService
   ]
 })
 export class ApiServicesModule { }

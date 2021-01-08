@@ -29,7 +29,10 @@ const routes: Routes = [
     }
   },
   { path: '', redirectTo: '/0', pathMatch: 'full' },
-  { path: '**', component: ErrorDisplayComponent }
+
+  { path: 'error/:errorId', component: ErrorDisplayComponent },
+
+  { path: '**', redirectTo: 'error/404', pathMatch: 'full' }
 ];
 
 @NgModule({

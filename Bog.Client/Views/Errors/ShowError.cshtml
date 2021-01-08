@@ -1,0 +1,14 @@
+﻿@using Microsoft.Extensions.Options
+@using Bog.Client.Domain.Configuration
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IOptions<SiteConfiguration> SiteConfigurationOptions
+@model Bog.Client.Domain.Models.ErrorResult
+
+@{
+    var siteConfiguration = SiteConfigurationOptions.Value;
+    ViewData["Title"] = Model.ErrorCode;
+    ViewData["Description"] = Model.Description;
+    ViewData["Canonical"] = ViewContext.HttpContext.Request.GetDisplayUrl();
+}
+
+<p>@Model.Description</p>

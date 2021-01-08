@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Bog.Client.Domain.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +50,12 @@ namespace Bog.Client
             {
                 //endpoints.MapRazorPages();
                 endpoints.MapControllers();
+            });
+
+            app.Run(async context =>
+            {
+                context.Response.Redirect("error/404");
+                await Task.CompletedTask;
             });
         }
     }

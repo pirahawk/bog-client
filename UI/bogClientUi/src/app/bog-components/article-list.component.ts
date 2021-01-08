@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { GetArticleListService } from '../api-services/get-article-list-service.service';
 import { GetBogConfigurationService } from '../api-services/get-bog-configuration-service.service';
 import { HeaderManagerService } from '../api-services/header-manager-service.service';
+import { ContentResponse } from '../api-services/models/contentResponse';
 import { RoutingHelperService } from '../api-services/routing-helper.service';
 
 @Component({
@@ -20,29 +21,28 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.activatedRoute.data.subscribe(
-      data =>{
-        this.updateHeaderTags();
-        console.log(data);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      const pageNumberParam = Number(paramMap.get('page'));
+      const currentPage = pageNumberParam || 0;
 
-    // this.activatedRoute.paramMap.subscribe(paramMap => {
-    //   const pageNumberParam = Number(paramMap.get('page'));
-    //   const currentPage = pageNumberParam || 0;
-    //   this.getArticleListService.getArticles(currentPage).subscribe(
-    //     httpResult => {
-    //       this.updateHeaderTags();
-    //       console.log(httpResult);
-    //     },
-    //     httpFailedResult => {
-    //       console.log(httpFailedResult);
-    //     }
-    //   );
-    // });
+      this.activatedRoute.data.subscribe(
+        data => {
+          const articleList: ContentResponse[] = data?.articlesList ?? [];
+
+          if (currentPage > 0 && (!data?.articlesList || articleList.length <= 0)){
+            this.routingHelper.tryNavigateBack(this.router);
+            return;
+          }
+
+          this.updateHeaderTags();
+          console.log(data);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+
+    });
   }
 
   private updateHeaderTags(): void {

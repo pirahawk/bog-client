@@ -1,26 +1,42 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { of } from 'rxjs';
 import { Observable } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Injectable()
 export class RoutingHelperService {
-  public get  ParamsMap(): Observable<ParamMap>{
-    return this.activatedRoute.paramMap;
-  }
+  constructor(private location: Location) {}
 
-  public get RouteData(): Observable<any>{
-    return this.activatedRoute.data;
-  }
-
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute ) { }
-
-  public doTest(): void{
-    this.activatedRoute.paramMap.subscribe(
-      pmap => {
-      const contentId = pmap.get('contentId');
-      const title = pmap.has('title') ? pmap.get('title') : '';
+  public navigateToPage(router: Router, page: number): Promise<boolean>{
+    if (!router){
+      return of(false).toPromise();
     }
-    );
+
+    return router.navigate(['0'], { skipLocationChange: false, replaceUrl: true });
+  }
+
+  public navigateError(router: Router, errorCode: number): Promise<boolean>{
+    if (!router){
+      return of(false).toPromise();
+    }
+
+    return router.navigate(['error', 404], { skipLocationChange: false, replaceUrl: true });
+  }
+
+  public tryNavigateBack(router: Router): Promise<boolean>{
+    if (!router){
+      return of(false).toPromise();
+    }
+
+    this.location.back();
+
+    // const currentNavigation = router.getCurrentNavigation();
+
+    // if (!currentNavigation || !currentNavigation.initialUrl){
+    //   return this.navigateToPage(router, 0);
+    // }
+
+    // return router.navigateByUrl(currentNavigation.initialUrl);
   }
 }

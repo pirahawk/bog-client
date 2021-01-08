@@ -18,33 +18,23 @@ export class ArticleDisplayComponent implements OnInit {
               private headerManagerService: HeaderManagerService) { }
 
   ngOnInit(): void {
-    //TODO: do something with this
-    //this.routingHelper.doTest();
-
     this.activatedRoute.data.subscribe(
       data =>{
-        if(data.articleContent){
-          this.updateHeaderTags(data.articleContent);
+        if(!data.articleContent){
+          this.routingHelper.navigateError(this.router, 404);
+          return;
         }
+
+        this.updateHeaderTags(data.articleContent);
         console.log(data);
       },
+
       err => {
         console.log(err);
+        this.routingHelper.navigateError(this.router, 404);
+        this.router.navigate(['error', 404], { skipLocationChange: false });
       }
     );
-
-    // this.activatedRoute.paramMap.subscribe(paramMap => {
-    //   const contentId = paramMap.get('contentId');
-    //   const title = paramMap.has('title') ? paramMap.get('title') : '';
-
-    //   this.getArticleContentService.getArticles(contentId, title).subscribe(
-    //     httpResult => {
-    //       const articleResult: ArticleContentResult = httpResult.body;
-    //       this.updateHeaderTags(articleResult);
-    //       console.log(httpResult);
-    //     }
-    //   );
-    // });
   }
 
   private updateHeaderTags(articleResult: ArticleContentResult): void {
