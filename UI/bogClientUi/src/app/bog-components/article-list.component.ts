@@ -4,6 +4,7 @@ import { GetArticleListService } from '../api-services/get-article-list-service.
 import { GetBogConfigurationService } from '../api-services/get-bog-configuration-service.service';
 import { HeaderManagerService } from '../api-services/header-manager-service.service';
 import { ContentResponse } from '../api-services/models/contentResponse';
+import { RemoveServerContentService } from '../api-services/remove-server-content.service';
 import { RoutingHelperService } from '../api-services/routing-helper.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class ArticleListComponent implements OnInit {
               private routingHelper: RoutingHelperService,
               private getArticleListService: GetArticleListService,
               private bogConfigurationService: GetBogConfigurationService,
-              private headerManagerService: HeaderManagerService) { }
+              private headerManagerService: HeaderManagerService,
+              private serverContentService: RemoveServerContentService) { }
 
   ngOnInit(): void {
 
@@ -36,6 +38,7 @@ export class ArticleListComponent implements OnInit {
 
           this.updateHeaderTags();
           console.log(data);
+          this.serverContentService.hideServerContent();
         },
         err => {
           console.log(err);

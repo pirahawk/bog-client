@@ -30,13 +30,5 @@ export class RoutingHelperService {
     }
 
     this.location.back();
-
-    // const currentNavigation = router.getCurrentNavigation();
-
-    // if (!currentNavigation || !currentNavigation.initialUrl){
-    //   return this.navigateToPage(router, 0);
-    // }
-
-    // return router.navigateByUrl(currentNavigation.initialUrl);
   }
 }

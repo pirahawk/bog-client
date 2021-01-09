@@ -3,6 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { GetArticleContentService } from '../api-services/get-article-content-service.service';
 import { HeaderManagerService } from '../api-services/header-manager-service.service';
 import { ArticleContentResult } from '../api-services/models/articleContentResult';
+import { RemoveServerContentService } from '../api-services/remove-server-content.service';
 import { RoutingHelperService } from '../api-services/routing-helper.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class ArticleDisplayComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private routingHelper: RoutingHelperService,
               private getArticleContentService: GetArticleContentService,
-              private headerManagerService: HeaderManagerService) { }
+              private headerManagerService: HeaderManagerService,
+              private serverContentService: RemoveServerContentService) { }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(
@@ -27,6 +29,7 @@ export class ArticleDisplayComponent implements OnInit {
 
         this.updateHeaderTags(data.articleContent);
         console.log(data);
+        this.serverContentService.hideServerContent();
       },
 
       err => {
