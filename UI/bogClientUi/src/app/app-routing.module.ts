@@ -5,6 +5,7 @@ import { ArticleListComponent } from './bog-components/article-list.component';
 import { ErrorDisplayComponent } from './bog-components/error-display.component';
 import { GetArticleListResolver } from './route-resolvers/get-article-list-resolver';
 import { GetArticleResolver } from './route-resolvers/get-article-resolver';
+import { HasNextArticleListResolver } from './route-resolvers/has-next-article-list-resolver';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     path: ':page',
     component: ArticleListComponent,
     resolve: {
-      articlesList: GetArticleListResolver
+      articlesList: GetArticleListResolver,
+      hasNextArticles: HasNextArticleListResolver
     }
   },
   { path: '', redirectTo: '/0', pathMatch: 'full' },

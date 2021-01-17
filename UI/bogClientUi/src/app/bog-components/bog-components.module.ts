@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ArticleListComponent } from './article-list.component';
 import { ArticleDisplayComponent } from './article-display.component';
 import { ErrorDisplayComponent } from './error-display.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { ErrorDisplayComponent } from './error-display.component';
     ArticleDisplayComponent,
     ErrorDisplayComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ]
 })
 export class BogComponentsModule { }

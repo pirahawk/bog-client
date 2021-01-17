@@ -13,6 +13,10 @@ import { RoutingHelperService } from '../api-services/routing-helper.service';
 })
 export class ArticleListComponent implements OnInit {
 
+  public articleList: ContentResponse[];
+  public currentPage: number;
+  public hasNextPage: boolean;
+
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private routingHelper: RoutingHelperService,
@@ -25,13 +29,14 @@ export class ArticleListComponent implements OnInit {
 
     this.activatedRoute.paramMap.subscribe(paramMap => {
       const pageNumberParam = Number(paramMap.get('page'));
-      const currentPage = pageNumberParam || 0;
+      this.currentPage = pageNumberParam || 0;
 
       this.activatedRoute.data.subscribe(
         data => {
-          const articleList: ContentResponse[] = data?.articlesList ?? [];
+          this.hasNextPage = data.hasNextArticles;
+          this.articleList = data?.articlesList ?? [];
 
-          if (currentPage > 0 && (!data?.articlesList || articleList.length <= 0)){
+          if (this.currentPage > 0 && (!data?.articlesList || this.articleList.length <= 0)){
             this.routingHelper.tryNavigateBack(this.router);
             return;
           }
@@ -44,7 +49,6 @@ export class ArticleListComponent implements OnInit {
           console.log(err);
         }
       );
-
     });
   }
 

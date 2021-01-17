@@ -1,1 +1,12 @@
-<p>article-list works!</p>
+<ng-container *ngIf="articleList && articleList.length">
+  <div *ngFor="let contentArticle of articleList ">
+    <a routerLink="/article/{{contentArticle.id}}/{{contentArticle.title}}">{{contentArticle.title}}</a>
+    <span>{{contentArticle.description}}</span>
+    <span>by {{contentArticle.author}}</span>
+    <span *ngIf="contentArticle.updated">Updated - {{contentArticle.updated | date:'shortDate'}}</span>
+    <span *ngIf="!contentArticle.updated && contentArticle.created">Created - {{contentArticle.created | date:'shortDate'}}</span>
+  </div>
+</ng-container>
+<a *ngIf="currentPage > 0" routerLink="/{{currentPage-1}}" >previous</a>
+<a *ngIf="hasNextPage" routerLink="/{{currentPage+1}}" >next</a>
+
