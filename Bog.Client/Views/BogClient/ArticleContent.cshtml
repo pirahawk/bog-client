@@ -18,5 +18,5 @@
 <article>
     <h1>@(Model.Article.Title)</h1>
     <cite>@($"by - {Model.Article.Author} {Model.Article.Created:d}")</cite>
-    @Html.Raw(decodedContent)
+    <div>@Html.Raw(decodedContent)</div>
 </article>

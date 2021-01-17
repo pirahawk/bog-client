@@ -1,1 +1,8 @@
-<p>article-display works!</p>
+<ng-container *ngIf="articleContent">
+  <article>
+    <h1 *ngIf="articleContent.article.title">{{articleContent.article.title}}</h1>
+    <cite *ngIf="articleContent.article.author">by - {{articleContent.article.author}}<ng-container *ngIf="articleContent.article.created"> {{articleContent.article.created | date:'shortDate'}}</ng-container></cite>
+    <div id="content-{{articleContent.article.id}}" [attr.data-contentPull]="pullArticleContent">
+    </div>
+  </article>
+</ng-container>

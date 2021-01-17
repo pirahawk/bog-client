@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GetArticleContentService } from '../api-services/get-article-content-service.service';
 import { HeaderManagerService } from '../api-services/header-manager-service.service';
 import { ArticleContentResult } from '../api-services/models/articleContentResult';
@@ -11,6 +11,19 @@ import { RoutingHelperService } from '../api-services/routing-helper.service';
   templateUrl: './article-display.component.html'
 })
 export class ArticleDisplayComponent implements OnInit {
+  public articleContent: ArticleContentResult;
+  private hasUpdatedContent: boolean;
+  public get pullArticleContent(): boolean{
+    if (this.articleContent && !this.hasUpdatedContent){
+      const contentElement = document.getElementById(`content-${this.articleContent.article.id}`);
+
+      if (contentElement){
+        contentElement.innerHTML = atob(this.articleContent.encodedContent);
+        this.hasUpdatedContent = true;
+      }
+    }
+    return true;
+  }
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -21,8 +34,8 @@ export class ArticleDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(
-      data =>{
-        if(!data.articleContent){
+      data => {
+        if (!data.articleContent){
           this.routingHelper.navigateError(this.router, 404);
           return;
         }
@@ -30,6 +43,7 @@ export class ArticleDisplayComponent implements OnInit {
         this.updateHeaderTags(data.articleContent);
         console.log(data);
         this.serverContentService.hideServerContent();
+        this.articleContent = data.articleContent;
       },
 
       err => {
