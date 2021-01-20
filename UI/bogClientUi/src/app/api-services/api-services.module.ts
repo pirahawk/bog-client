@@ -6,9 +6,10 @@ import { GetBogConfigurationService } from './get-bog-configuration-service.serv
 import { HeaderManagerService } from './header-manager-service.service';
 import { RoutingHelperService } from './routing-helper.service';
 import { RemoveServerContentService } from './remove-server-content.service';
+import { GetMenuConfigurationService } from './get-menu-configuration.service';
 
 const configurationServiceFactory = () => new GetBogConfigurationService();
-
+const menuConfigurationFactory = () => new GetMenuConfigurationService();
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ const configurationServiceFactory = () => new GetBogConfigurationService();
   ],
   providers: [
     {provide: GetBogConfigurationService, useValue: configurationServiceFactory()},
+    {provide: GetMenuConfigurationService, useValue: menuConfigurationFactory()},
     GetArticleListService,
     GetArticleContentService,
     HeaderManagerService,
