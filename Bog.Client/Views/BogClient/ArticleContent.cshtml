@@ -1,7 +1,6 @@
 ﻿@using Bog.Api.Domain.Values
 @using Bog.Api.Common
 @model Bog.Client.Domain.Models.ArticleContentResult
-
 @{
     var decodedContent = StringUtilities.FromBase64(Model.EncodedContent);
     ViewData["Title"] = Model.Article.Title;
@@ -14,7 +13,6 @@
         contentId = Model.Article.Id,
     });
 }
-
 <article>
     <h1>@(Model.Article.Title)</h1>
     <cite>@($"by - {Model.Article.Author} {Model.Article.Created:d}")</cite>

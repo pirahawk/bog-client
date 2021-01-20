@@ -2,9 +2,7 @@
 @using Microsoft.Extensions.Options
 @using Microsoft.AspNetCore.Http.Extensions
 @model Bog.Client.Domain.Models.PaginatedContentResult
-
 @inject IOptions<SiteConfiguration> SiteConfigurationOptions
-
 @{
     var siteConfiguration = SiteConfigurationOptions.Value;
     ViewData["Title"] = siteConfiguration.Title;
@@ -14,8 +12,6 @@
 
     var allContent = Model.Content.ToArray();
 }
-
-
 @foreach (var content in allContent)
 {
     var link = Url.Action("GetArticle", new
@@ -23,7 +19,6 @@
         contentId = content.Id,
         title = content.Title?.Trim().Replace(' ', '-')
     });
-
     <div>
         <a href="@(link)"><span>@(content.Title)</span></a>
         <span>@(content.Description)</span>
@@ -31,13 +26,11 @@
         <span>@(content.Updated.HasValue? $"Updated - {content.Updated.Value:d}": $"Created - {content.Created:d}")</span>
     </div>
 }
-
 @if (Model.Page > 0)
 {
     var backLink = Url.Action("GetPaginatedContent", new { page = Model.Page - 1 });
     <a href="@(backLink)">previous</a>
 }
-
 @if (allContent.Any())
 {
     var forwardLink = Url.Action("GetPaginatedContent", new { page = Model.Page + 1 });

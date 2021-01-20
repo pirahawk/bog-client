@@ -8,10 +8,12 @@ namespace Bog.Client.Controllers
     public class ConfigurationController : ControllerBase
     {
         private readonly SiteConfiguration _siteConfiguration;
+        private MenuConfiguration _menuConfiguration;
 
-        public ConfigurationController(IOptions<SiteConfiguration> siteConfiguration)
+        public ConfigurationController(IOptions<SiteConfiguration> siteConfiguration, IOptions<MenuConfiguration> menuConfiguration)
         {
             _siteConfiguration = siteConfiguration.Value;
+            _menuConfiguration = menuConfiguration.Value;
         }
 
         [HttpGet]
@@ -19,6 +21,13 @@ namespace Bog.Client.Controllers
         public IActionResult GetConfiguration()
         {
             return Ok(_siteConfiguration);
+        }
+
+        [HttpGet]
+        [Route("menuConfig")]
+        public IActionResult GetMenuConfiguration()
+        {
+            return Ok(_menuConfiguration);
         }
     }
 }

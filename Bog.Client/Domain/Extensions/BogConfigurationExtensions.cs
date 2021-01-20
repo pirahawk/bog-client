@@ -11,6 +11,7 @@ namespace Bog.Client.Domain.Extensions
             services.Configure<BogApiConnectionConfiguration>(configuration.GetSection("BogApiConnectionConfiguration"));
             services.Configure<ContentConfiguration>(configuration.GetSection("ContentConfiguration"));
             services.Configure<SiteConfiguration>(configuration.GetSection("SiteConfiguration"));
+            services.Configure<MenuConfiguration>(configuration.GetSection("MenuConfiguration"));
         }
     }
 }
