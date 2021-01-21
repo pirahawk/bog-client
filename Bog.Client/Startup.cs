@@ -54,7 +54,7 @@ namespace Bog.Client
 
             app.Run(async context =>
             {
-                context.Response.Redirect("error/404");
+                context.Response.Redirect("/error/404");
                 await Task.CompletedTask;
             });
         }

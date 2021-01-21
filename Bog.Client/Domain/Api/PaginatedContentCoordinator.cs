@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Bog.Api.Domain.Models.Http;
 using Bog.Client.Domain.Configuration;
@@ -28,7 +29,7 @@ namespace Bog.Client.Domain.Api
             int skip = page * take;
 
             var result = await _apiClient.GetArticles(take, skip, _contentConfiguration.Filter, _contentConfiguration.Include);
-            return result;
+            return result.ToArray();
         }
     }
 }

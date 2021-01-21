@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Bog.Client.Domain.Api;
 using Bog.Client.Domain.Models;
@@ -22,12 +23,25 @@ namespace Bog.Client.Controllers
         [Route("{page:int}")]
         public async Task<IActionResult> GetPaginatedContent([FromRoute]int page)
         {
-            var allContent =  await _paginatedContentCoordinator.GetContent(page);
-            return View("PaginatedContent", new PaginatedContentResult
+            try
             {
-                Page = page,
-                Content = allContent
-            });
+                var allContent = await _paginatedContentCoordinator.GetContent(page);
+
+                if (page > 0 && (allContent == null || !allContent.Any()))
+                {
+                    return RedirectToAction("GetPaginatedContent", "BogClient", new { page = 0 });
+                }
+
+                return View("PaginatedContent", new PaginatedContentResult
+                {
+                    Page = page,
+                    Content = allContent
+                });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ShowError", "Errors", new { errorCode = 404 });
+            }
         }
 
         [HttpGet]
@@ -35,8 +49,21 @@ namespace Bog.Client.Controllers
         [Route("article/{contentId:guid}/{title}")]
         public async Task<IActionResult> GetArticle([FromRoute]Guid contentId)
         {
-            var articleContent = await _articleContentCoordinator.GetArticle(contentId);
-            return View("ArticleContent", articleContent);
+            try
+            {
+                var articleContent = await _articleContentCoordinator.GetArticle(contentId);
+
+                if (articleContent == null)
+                {
+                    RedirectToAction("ShowError", "Errors", new { errorCode = 404 });
+                }
+                
+                return View("ArticleContent", articleContent);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ShowError", "Errors", new { errorCode = 404 });
+            }
         }
     }
 }
