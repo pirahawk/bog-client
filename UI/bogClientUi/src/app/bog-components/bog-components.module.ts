@@ -4,15 +4,20 @@ import { ArticleListComponent } from './article-list.component';
 import { ArticleDisplayComponent } from './article-display.component';
 import { ErrorDisplayComponent } from './error-display.component';
 import { RouterModule } from '@angular/router';
+import { MenuComponent } from './menu.component';
 
 @NgModule({
   declarations: [
     ArticleListComponent,
     ArticleDisplayComponent,
-    ErrorDisplayComponent],
+    ErrorDisplayComponent,
+    MenuComponent],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+  ],
+  exports:[
+    MenuComponent
   ]
 })
 export class BogComponentsModule { }

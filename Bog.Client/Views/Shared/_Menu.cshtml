@@ -6,15 +6,13 @@
     var menuItems = menuOptions.MenuList;
 }
 <nav class="menu">
-    <ul>
-        @foreach (var menuItem in menuItems)
+    @foreach (var menuItem in menuItems)
+    {
+        var menuLink = Url.Action("GetArticle", new
         {
-            var menuLink = Url.Action("GetArticle", new
-            {
-                contentId = menuItem.Id,
-                title = menuItem.Title?.Trim().Replace(' ', '-')
-            });
-            <li><a href="@menuLink">@menuItem.Title</a></li>
-        }
-    </ul>
+            contentId = menuItem.Id,
+            title = menuItem.Title?.Trim().Replace(' ', '-')
+        });
+        <span><a href="@menuLink">@menuItem.Title</a></span>
+    }
 </nav>
