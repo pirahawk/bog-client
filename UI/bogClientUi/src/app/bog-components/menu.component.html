@@ -1,7 +1,8 @@
 <ng-container *ngIf="menuList">
   <nav class="menu">
     <span *ngFor="let menuItem of menuList">
-      <a routerLink="/article/{{menuItem.id}}/{{menuItem.title}}">{{menuItem.title}}</a>
+      <a routerLink="/article/{{menuItem.id}}/{{menuItem.title}}"
+      [class.selected]="menuItem.id === selectedArticleId">{{menuItem.title}}</a>
     </span>
   </nav>
 </ng-container>
