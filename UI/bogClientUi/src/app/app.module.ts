@@ -12,8 +12,11 @@ import { GetMenuConfigurationService } from './api-services/get-menu-configurati
 export function startupServiceFactory(
   configurationService: GetBogConfigurationService,
   menuConfigurationService: GetMenuConfigurationService): Function {
-  return () => configurationService.load()
-    .then(response => menuConfigurationService.load());
+    const configurationPromise = configurationService.load();
+    const menuConfigurationPromise = menuConfigurationService.load();
+
+    return () => configurationPromise
+    .then(response => menuConfigurationPromise);
 }
 
 @NgModule({
