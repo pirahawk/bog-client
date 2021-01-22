@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SiteConfiguration } from './models/serviceConfiguration';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { observable, of } from 'rxjs';
 
 @Injectable()
 export class GetBogConfigurationService {
@@ -10,25 +11,14 @@ export class GetBogConfigurationService {
     return this.siteConfiguration;
   }
 
-  constructor() {
-    // ajax('/config').subscribe(
-    //   ajxResponse => {
-    //     if(ajxResponse.status !== 200){
-    //       console.error(`Could not load site configuration: ${ajxResponse}`);
-    //       return;
-    //     }
-
-    //     this.siteConfiguration = ajxResponse.response as SiteConfiguration;
-    //   },
-    //   ajxError => {
-    //     console.error(`Could not load site configuration: ${ajxError}`);
-    //   }
-    // );
-  }
-
   public load(): Promise<SiteConfiguration> {
     const configXhrRequest = ajax('/config')
-      .pipe(map(ajxResponse => {
+      .pipe(
+        catchError(ajxError =>{
+          console.error(`Could not load site configuration: ${ajxError}`);
+          return of(ajxError);
+        }),
+        map(ajxResponse => {
         if (ajxResponse.status !== 200) {
           console.error(`Could not load site configuration: ${ajxResponse}`);
           return;

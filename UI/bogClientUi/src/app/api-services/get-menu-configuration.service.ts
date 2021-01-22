@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MenuConfiguration } from './models/menuConfiguration';
 import { ajax, AjaxResponse } from 'rxjs/ajax';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class GetMenuConfigurationService {
@@ -10,24 +11,14 @@ export class GetMenuConfigurationService {
     return this.menuConfiguration;
   }
 
-  constructor() {
-    // ajax('/menuConfig').subscribe(
-    //   ajxResponse => {
-    //     if(ajxResponse.status !== 200){
-    //       console.error(`Could not load menu configuration: ${ajxResponse}`);
-    //       return;
-    //     }
-    //     this.menuConfiguration = ajxResponse.response as MenuConfiguration;
-    //   },
-    //   ajxError => {
-    //     console.error(`Could not load menu configuration: ${ajxError}`);
-    //   }
-    // );
-  }
-
   public load(): Promise<MenuConfiguration> {
     const menuConfigXhrRequest = ajax('/menuConfig')
-      .pipe(map(ajxResponse => {
+      .pipe(
+        catchError(ajxError =>{
+          console.error(`Could not load menu configuration: ${ajxError}`);
+          return of(ajxError);
+        }),
+        map(ajxResponse => {
         if (ajxResponse.status !== 200) {
           console.error(`Could not load menu configuration: ${ajxResponse}`);
           return;
