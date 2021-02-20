@@ -1,0 +1,31 @@
+@use 'sass:meta';
+@use 'sass:list';
+
+$googleFontUri: "https://fonts.googleapis.com/css2";
+$font-family-root: 'Noto Sans JP', sans-serif;
+$font-family-headers: 'Roboto Condensed', sans-serif;
+
+@mixin importGoogleFontFamily($fontFamilies){
+  @each $fontFamily in $fontFamilies{
+    @import url("#{$googleFontUri}?family=#{$fontFamily}&display=swap");
+  }
+}
+
+@mixin applyBaseFontDefinition($fontFamily, $fontFamilyWeight, $elementSelectors){
+
+  #{list.zip($elementSelectors)} {
+    font-family: #{meta.inspect($fontFamily)};
+    font-weight: $fontFamilyWeight;
+  };
+}
+
+@include importGoogleFontFamily(
+"Montserrat:wght@400;500"
+"Lato:ital,wght@0,300;0,400;0,700;1,300"
+"Roboto:ital,wght@0,300;0,400;0,500;1,300"
+"Noto+Sans+JP:wght@300;400;700"
+"Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400");
+
+@include applyBaseFontDefinition($font-family-root, 400, body);
+@include applyBaseFontDefinition($font-family-headers, 400, h1 h2 h3 h4 h5 h6);
+
